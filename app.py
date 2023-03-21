@@ -1,3 +1,4 @@
+from rouge import Rouge
 from gensim.summarization import summarize
 from sumy.parsers.plaintext import PlaintextParser
 from sumy.nlp.tokenizers import Tokenizer
@@ -9,6 +10,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import matplotlib
 matplotlib.use('Agg')
+
+
+def evaluate(summary, reference):
+    r = Rouge()
+    scores = r.get_scores(summary, reference)
+    scores_df = pd.DataFrame(scores[0])
+    return scores_df
 
 
 def summy(docx):
@@ -37,10 +45,19 @@ def main():
                 with st.expander("LexRank Summary"):
                     summary = summy(raw_text)
                     st.write(summary)
+
+                    st.info("Rouge Score")
+                    score = evaluate(summary, raw_text)
+                    st.dataframe(score)
+
             with c2:
                 with st.expander("TextRank Summary"):
                     summary = summarize(raw_text)
                     st.write(summary)
+
+                    st.info("Rouge Score")
+                    score = evaluate(summary, raw_text)
+                    st.dataframe(score)
 
     elif choice == "About":
         st.subheader("About")
