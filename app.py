@@ -1,3 +1,4 @@
+import altair as alt
 from rouge import Rouge
 from gensim.summarization import summarize
 from sumy.parsers.plaintext import PlaintextParser
@@ -44,20 +45,38 @@ def main():
             with c1:
                 with st.expander("LexRank Summary"):
                     summary = summy(raw_text)
+                    document_length = {'Original Length': len(
+                        raw_text), 'Summary Length': len(summary)}
+                    st.write(document_length)
                     st.write(summary)
 
                     st.info("Rouge Score")
                     score = evaluate(summary, raw_text)
                     st.dataframe(score)
+
+                    # Plotting the Rouge Score
+                    score['matrics'] = score.index
+                    c = alt.Chart(score).mark_bar().encode(
+                        x='matrics', y='rouge-1')
+                    st.altair_chart(c)
 
             with c2:
                 with st.expander("TextRank Summary"):
                     summary = summarize(raw_text)
+                    document_length = {'Original Length': len(
+                        raw_text), 'Summary Length': len(summary)}
+                    st.write(document_length)
                     st.write(summary)
 
                     st.info("Rouge Score")
                     score = evaluate(summary, raw_text)
                     st.dataframe(score)
+
+                    # Plotting the Rouge Score
+                    score['matrics'] = score.index
+                    c = alt.Chart(score).mark_bar().encode(
+                        x='matrics', y='rouge-1')
+                    st.altair_chart(c)
 
     elif choice == "About":
         st.subheader("About")
