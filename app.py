@@ -31,11 +31,11 @@ def summy(docx):
 
 def main():
     st.title("Text Summarizer App")
-    menu = ["Home", "About"]
+    menu = ["Home", "NLP", "About"]
     choice = st.sidebar.selectbox("Menu", menu)
 
     if choice == "Home":
-        st.subheader("Home")
+        st.subheader("TextRank Summary vs LexRank Summary")
         raw_text = st.text_area("Your Text", "Type Here")
         if st.button("Summarize"):
             with st.expander("Original Text"):
@@ -77,6 +77,9 @@ def main():
                     c = alt.Chart(score).mark_bar().encode(
                         x='matrics', y='rouge-1')
                     st.altair_chart(c)
+
+    elif choice == "NLP":
+        st.subheader("Natural Language Processing")
 
     elif choice == "About":
         st.subheader("About")
