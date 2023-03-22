@@ -102,10 +102,10 @@ def read_pdf(pdf_file):
 
 
 def nlp_app():
-    menu = ['Home', 'NLP', 'About']
+    menu = ['Text Summarizer', 'NLP']
 
-    choice = st.sidebar.selectbox("Menu", menu)
-    if choice == 'Home':
+    choice = st.sidebar.selectbox("Menu", menu, key='2')
+    if choice == 'Text Summarizer':
         st.subheader("Analyse Your Text")
         raw_text = st.text_area("Your Text", "Type Here")
         # num_sentences = st.sidebar.number_input("Number of Sentences", 1, 20)
